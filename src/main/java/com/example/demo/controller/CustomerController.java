@@ -4,11 +4,17 @@ import com.example.demo.common.R;
 import com.example.demo.entity.Customers;
 import com.example.demo.service.CustomerService;
 import io.swagger.annotations.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+import static java.lang.Thread.sleep;
 
 @RestController
 @RequestMapping("/customer")
@@ -25,4 +31,11 @@ public class CustomerController {
         customerService.saveCustomer();
         return R.ok();
     }
+
+    @RabbitListener(queues = "MQ_QUEUE_NAME")
+    public void getMQMessage(String message) throws InterruptedException {
+        System.out.println("time:"+System.currentTimeMillis()+"jack接受到了了到消息:"+message);
+    }
+
+
 }

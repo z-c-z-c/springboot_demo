@@ -3,43 +3,48 @@ server:
   servlet:
     context-path: /springboot
 spring:
+  rabbitmq:
+    host: 123.56.60.123
+    port: 5672
+    username: guest
+    password: guest
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       demo1:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://123.56.60.123:3306/demo_springboot?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: root
-      initial-size: 10
-      max-active: 100
-      min-idle: 5
-      pool-prepared-statements: false
-      validation-query: select * from dual
-      test-while-idle: true
-      time-between-eviction-runs-millis: 1
-      filter:
-        #打开druid监控
-        stat:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://123.56.60.123:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+        initial-size: 10
+        max-active: 100
+        min-idle: 5
+        pool-prepared-statements: false
+        validation-query: select * from dual
+        test-while-idle: true
+        time-between-eviction-runs-millis: 1
+        filter:
+          #打开druid监控
+          stat:
           #慢sql日志输出
-          log-slow-sql: true
-        wall:
-          config:
-            #开启sql防注入
-            multi-statement-allow: true
-      web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-        #开启druid监控需注册servlet，在这里设置启用
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        login-username: admin
-        login-password: admin
+            log-slow-sql: true
+          wall:
+            config:
+              #开启sql防注入
+              multi-statement-allow: true
+        web-stat-filter:
+          exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+          #开启druid监控需注册servlet，在这里设置启用
+        stat-view-servlet:
+          enabled: true
+          url-pattern: /druid/*
+          login-username: admin
+          login-password: admin
       demo2:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://123.56.60.123:3306/demo_springboot2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://123.56.60.123:3306/demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
         username: root
-        password: root
+        password: 123456
         initial-size: 10
         max-active: 100
         min-idle: 5
@@ -64,8 +69,6 @@ spring:
             url-pattern: /druid/*
             login-username: admin
             login-password: admin
-
-
 #mybatis
 mybatis-plus:
   #sql语句xml文件扫描
@@ -74,7 +77,7 @@ mybatis-plus:
   type-aliases-package: com.example.demo.entity
   configuration:
     #是否开启自动驼峰命名规则（camel case）映射
-    #map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true
     cache-enabled: false
     jdbc-type-for-null: 'null'
     #针对返回值种的null处理
@@ -83,7 +86,6 @@ mybatis-plus:
     #数据库相关配置
     db-config:
       #主键id增长策略
-      id-type: uuid
       #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
       field-strategy: not_null
       #配置逻辑删除标识为1
@@ -92,4 +94,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       #数据库大写下划线转换
       capital-mode: true
+
+
+
 

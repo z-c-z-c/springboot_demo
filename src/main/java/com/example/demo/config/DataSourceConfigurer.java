@@ -17,16 +17,19 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author zc
+ */
 @Configuration
 public class DataSourceConfigurer {
     @Bean(value = "dataSourceOne")
-    @ConfigurationProperties("spring.datasource.druid.demo1")
+    @ConfigurationProperties(prefix="spring.datasource.druid.demo1")
     public DataSource dataSourceOne(){
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(value = "dataSourceTwo")
-    @ConfigurationProperties("spring.datasource.druid.demo2")
+    @ConfigurationProperties(prefix="spring.datasource.druid.demo2")
     public DataSource dataSourceTwo(){
         return DruidDataSourceBuilder.create().build();
     }
@@ -52,28 +55,13 @@ public class DataSourceConfigurer {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(multipleDataSource(dataSourceOne(),dataSourceTwo()));
-        //sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*/*Mapper.xml"));
 
         MybatisConfiguration configuration = new MybatisConfiguration();
-        //configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCacheEnabled(false);
         sqlSessionFactory.setConfiguration(configuration);
-        //sqlSessionFactory.setGlobalConfig(globalConfiguration());
         return sqlSessionFactory.getObject();
     }
-
-    /*@Bean
-    public GlobalConfiguration globalConfiguration() {
-        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
-        conf.setLogicDeleteValue("-1");
-        conf.setLogicNotDeleteValue("1");
-        conf.setIdType(0);
-        //conf.setMetaObjectHandler(new MyMetaObjectHandler());
-        conf.setDbColumnUnderline(true);
-        conf.setRefresh(true);
-        return conf;
-    }*/
 
 }

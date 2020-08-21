@@ -11,4 +11,9 @@ public interface CustomerService extends IService<Customers> {
      * 保存用户信息
      */
      void saveCustomer();
+
+     String modifyStr(String str) throws InterruptedException;
+
+     void saveBatchCustomer(int num);
+
 }
