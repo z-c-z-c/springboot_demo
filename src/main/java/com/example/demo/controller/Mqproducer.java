@@ -23,7 +23,7 @@ public class Mqproducer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         customerService.saveBatchCustomer(2);
-        //测试合并代码333333
+        //测试合并代码444444
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("hyn-demo-pool-%d").build();
         ThreadPoolExecutor executor = new ThreadPoolExecutor(9,
                 20,
